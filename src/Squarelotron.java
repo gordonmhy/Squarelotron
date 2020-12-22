@@ -138,31 +138,22 @@ public class Squarelotron {
     /**
      * Flips one of the rings of the Squarelotron upside down
      * @param ring The ring to flip
-     * @return Squarelotron
      */
-    public Squarelotron upsideDownFlip(int ring) {
-        int[] contents = new int[size * size];
-        for (int i = 0, k = 0; i < size; i++) {
-            for (int j = 0; j < size; j++, k++) {
-                contents[k] = squarelotron[i][j];
-            }
-        }
-        Squarelotron result = new Squarelotron(size, contents);
+    public void upsideDownFlip(int ring) {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
+                int tmp = squarelotron[i][j];
                 if (i == ring - 1 && j >= ring - 1 && j <= size - ring) {
-                    result.squarelotron[i][j] = this.squarelotron[size - ring][j];
-                } else if ((j == ring - 1 || j == size - ring)
-                        && (i > ring - 1 && i < size - ring)) {
-                    result.squarelotron[i][j] = this.squarelotron[size - 1 - i][j];
-                } else if (i == size - ring && j >= ring - 1 && j <= size - ring) {
-                    result.squarelotron[i][j] = this.squarelotron[ring - 1][j];
-                } else {
-                    result.squarelotron[i][j] = this.squarelotron[i][j];
+                    squarelotron[i][j] = squarelotron[size - ring][j];
+                    squarelotron[size - ring][j] = tmp;
+                }
+                if ((j == ring - 1 || j == size - ring)
+                        && i > ring - 1 && i <= (size - ring) / 2) {
+                    squarelotron[i][j] = squarelotron[size - 1 - i][j];
+                    squarelotron[size - 1 - i][j] = tmp;
                 }
             }
         }
-        return result;
     }
 
     /**

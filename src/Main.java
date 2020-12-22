@@ -77,7 +77,7 @@ public class Main {
                         System.out.println("Invalid ring.");
                         continue;
                     }
-                    current = current.upsideDownFlip(ring);
+                    current.upsideDownFlip(ring);
                     System.out.println("Matrix flipped.\nVisualization:");
                     current.printMatrix();
                     break;
