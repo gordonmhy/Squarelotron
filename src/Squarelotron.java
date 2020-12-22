@@ -4,9 +4,12 @@ import java.io.PrintWriter;
 
 public class Squarelotron {
 
+    private final int id;
     private final int[][] squarelotron;
     private final int size;
     private final int digits;
+
+    private static int count = 0;
 
     /**
      * Constructor of Squarelotron
@@ -15,6 +18,8 @@ public class Squarelotron {
      */
     public Squarelotron(int size, int[] slots) {
         this.size = size;
+        count++;
+        id = count;
         squarelotron = new int[size][size];
         int longest = 0;
         for (int i = 0, k = 0; i < size; i++) {
@@ -34,6 +39,14 @@ public class Squarelotron {
             }
         }
         this.digits = longest;
+    }
+
+    /**
+     * Obtains the ID of this Squarelotron
+     * @return int
+     */
+    public int getId(){
+        return this.id;
     }
 
     /**

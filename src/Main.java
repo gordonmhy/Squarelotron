@@ -1,8 +1,12 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+
+    // Stores Squarelotron objects
+    static ArrayList<Squarelotron> matrices;
 
     // Complemented by an ArrayList when multiple Squarelotrons exist
     static Squarelotron current;
@@ -17,13 +21,26 @@ public class Main {
         System.out.println("==== SQUARELOTRON ====");
         System.out.println("Start by creating a matrix (SETMATRIX)");
         printHelp();
+        int id;
         int ring;
+        String filename;
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("> ");
             switch (scanner.next()) {
+                case "ADDMATRIX":
+                    size = Integer.parseInt(scanner.next());
+                    filename = scanner.next();
+                    Squarelotron matrix = new Squarelotron(size, filename.equals("default") ? EMPTY : importFromFile(filename));
+                    matrices.add(matrix);
+                    System.out.println("Matrix added.\nVisualization:");
+                    matrix.printMatrix();
+                    break;
                 case "HELP":
                     printHelp();
+                    break;
+                case "LIST":
+                    // List all existing matrices' IDs
                     break;
                 case "MAINDIAGONALFLIP":
                     if (current == null){
@@ -39,8 +56,20 @@ public class Main {
                     System.out.println("Matrix flipped.\nVisualization:");
                     current.printMatrix();
                     break;
+                case "PRINT":
+                    // Print Squarelotron by ID
+                    break;
                 case "QUIT":
                     return;
+                case "REMOVEMATRIX":
+                    id = Integer.parseInt(scanner.next());
+                    if (!matrixExists(id)) {
+                        System.out.println("Invalid ID.");
+                        continue;
+                    }
+                    matrices.remove(getMatrix(id));
+                    System.out.println("Matrix (ID: " + id + ") removed.");
+                    break;
                 case "ROTATE":
                     if (current == null){
                         System.out.println("You have not set a matrix.");
@@ -51,9 +80,10 @@ public class Main {
                     System.out.println("Matrix rotated.\nVisualization:");
                     current.printMatrix();
                     break;
+                // Will be replaced by ADDMATRIX when multimatrix support is implemented
                 case "SETMATRIX":
                     size = Integer.parseInt(scanner.next());
-                    String filename = scanner.next();
+                    filename = scanner.next();
                     current = new Squarelotron(size, filename.equals("default") ? EMPTY : importFromFile(filename));
                     System.out.println("Matrix set.\nVisualization:");
                     current.printMatrix();
@@ -83,6 +113,33 @@ public class Main {
                     break;
             }
         }
+    }
+
+    /**
+     * Returns if the Squarelotron exist by specifying its ID
+     * @param id ID of Squarelotron
+     * @return Squarelotron
+     */
+    public static boolean matrixExists(int id) {
+        for (Squarelotron s : matrices) {
+            if (s.getId() == id)
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Obtains a Squarelotron object by ID
+     * The last Squarelotron in the list will be returned if ID does not exist
+     * @param id ID of Squarelotron
+     * @return Squarelotron
+     */
+    public static Squarelotron getMatrix(int id) {
+        for (Squarelotron s : matrices) {
+            if (s.getId() == id)
+                return s;
+        }
+        return matrices.get(matrices.size() - 1);
     }
 
     /**
