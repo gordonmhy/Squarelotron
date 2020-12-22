@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
 
     // Stores Squarelotron objects
-    static ArrayList<Squarelotron> matrices;
+    static ArrayList<Squarelotron> matrices = new ArrayList<>();
 
     // Complemented by an ArrayList when multiple Squarelotrons exist
     static Squarelotron current;
