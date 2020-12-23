@@ -32,6 +32,16 @@ public class Main {
                     System.out.println("Squarelotron (ID: " + matrix.getId() + ") added.\nVisualization:");
                     matrix.printMatrix();
                     break;
+                case "EXPORT":
+                    id = Integer.parseInt(scanner.next());
+                    if (!matrixExists(id)) {
+                        System.out.println("Invalid ID.");
+                        continue;
+                    }
+                    filename = scanner.next();
+                    if (getMatrix(id).exportToFile(filename.equals("default") ? "output.txt" : filename))
+                        System.out.println("Squarelotron (ID: " + id + ") exported to " + filename);
+                    break;
                 case "HELP":
                     printHelp();
                     break;
@@ -180,6 +190,7 @@ public class Main {
     private static void printHelp() {
         System.out.println("--- List of Commands ---");
         System.out.println("- ADDMATRIX <size> <filename|'default'>");
+        System.out.println("- EXPORT <ID> <filename|'default'>");
         System.out.println("- HELP");
         System.out.println("- LIST");
         System.out.println("- MAINDIAGONALFLIP <ID> <ring(Between 1 and CEIL(size/2))>");

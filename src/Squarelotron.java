@@ -45,7 +45,7 @@ public class Squarelotron {
      * Obtains the ID of this Squarelotron
      * @return int
      */
-    public int getId(){
+    public int getId() {
         return this.id;
     }
 
@@ -97,27 +97,43 @@ public class Squarelotron {
     }
 
     /**
-     * Prints the Squarelotron to terminal and outputs to the file output.txt
+     * Exports the Squarelotron to a file and returns true if successful
+     * @param filename Name of file to write
+     * @return boolean
      */
-    public void printMatrix() {
+    public boolean exportToFile(String filename) {
         try {
-            FileWriter writer = new FileWriter("output.txt");
+            FileWriter writer = new FileWriter(filename);
             PrintWriter printer = new PrintWriter(writer);
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                     int num = squarelotron[i][j];
-                    String c = this.zeroPad(((Integer) num).toString());
-                    System.out.print(c);
-                    System.out.print(j + 1 == size ? '\n' : ' ');
+                    String c = zeroPad(((Integer) num).toString());
                     printer.print(c);
                     printer.print(j + 1 == size ? '\n' : ' ');
                 }
             }
             printer.flush();
-            System.out.println();
         } catch (IOException e) {
             System.out.println("Error writing file.");
+            return false;
         }
+        return true;
+    }
+
+    /**
+     * Prints the Squarelotron to terminal and outputs to the file output.txt
+     */
+    public void printMatrix() {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                int num = squarelotron[i][j];
+                String c = zeroPad(((Integer) num).toString());
+                System.out.print(c);
+                System.out.print(j + 1 == size ? '\n' : ' ');
+            }
+        }
+        System.out.println();
     }
 
     /**
