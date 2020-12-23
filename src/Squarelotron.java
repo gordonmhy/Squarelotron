@@ -77,6 +77,16 @@ public class Squarelotron {
     }
 
     /**
+     * Compares two Squarelotron directly, by their sizes
+     * @param o Another Squarelotron object to be compared
+     * @return int
+     */
+    public int compareTo(Object o) {
+        Squarelotron s = (Squarelotron) o;
+        return size - s.getSize();
+    }
+
+    /**
      * Compares the size and the slots of two Squarelotrons
      * @param o Another Squarelotron object to be compared
      * @return Boolean
@@ -84,11 +94,12 @@ public class Squarelotron {
     public boolean equals(Object o) {
         if (!(o instanceof Squarelotron))
             return false;
-        if (this.size != ((Squarelotron) o).getSize())
+        Squarelotron s = (Squarelotron) o;
+        if (compareTo(s) != 0)
             return false;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (this.squarelotron[i][j] != ((Squarelotron) o).getSquarelotron()[i][j]) {
+                if (this.squarelotron[i][j] != (s.getSquarelotron()[i][j])) {
                     return false;
                 }
             }
