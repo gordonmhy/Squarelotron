@@ -40,7 +40,16 @@ public class Main {
                     printHelp();
                     break;
                 case "LIST":
-                    // List all existing matrices' IDs
+                    System.out.println("List of Squarelotrons [ID_(SIZExSIZE)]:");
+                    int i = 0;
+                    for (Squarelotron s : matrices) {
+                        System.out.print(s.getId() + "_(" + s.getSize() + "x" + s.getSize() + ") ");
+                        i++;
+                        if (i % 5 == 0)
+                            System.out.println();
+                    }
+                    if (i % 5 != 0)
+                        System.out.println();
                     break;
                 case "MAINDIAGONALFLIP":
                     if (current == null){
@@ -57,7 +66,13 @@ public class Main {
                     current.printMatrix();
                     break;
                 case "PRINT":
-                    // Print Squarelotron by ID
+                    id = Integer.parseInt(scanner.next());
+                    if (!matrixExists(id)) {
+                        System.out.println("Invalid ID.");
+                        continue;
+                    }
+                    System.out.println("Matrix (ID: " + id + ")\nVisualization:");
+                    getMatrix(id).printMatrix();
                     break;
                 case "QUIT":
                     return;
